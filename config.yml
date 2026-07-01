@@ -1,0 +1,41 @@
+# =====================================================================
+#  App config — ONE application per repo.
+#  Edit these, commit, and the next scheduled run uses them.
+#  Your OpenAI key is NOT here — it's the GitHub Secret OPENAI_API_KEY.
+# =====================================================================
+
+# Which feed list to read from the PRIVATE feeds repo.
+# Must match a file there: app_name "news" -> reads news.json
+app_name: "news"
+feed_title: "News"
+
+# ---- Output ----
+output_html: false          # false = clean text (AI-rewritten/stripped)
+                            # true  = keep the source's original HTML
+                            #         (only the title is AI-translated)
+max_output_items: 10000
+retention_days: 365
+
+# ---- This app's own Pages URL ----
+site_title: "News"
+site_base_url: "https://mtblq.github.io/app-news"
+
+# ---- Fetching ----
+fetch_workers: 12
+fetch_timeout: 30
+fetch_retries: 2
+
+# ---- AI rewrite / translation ----
+translate_enabled: true
+openai_model: "chatgpt-4o-latest"
+openai_base_url: "https://api.openai.com/v1"
+target_language: "English"
+rewrites_per_run: 1000
+translate_batch_size: 10
+translate_workers: 6
+translate_timeout: 90
+translate_max_retries: 2
+
+# The instruction this app's AI follows. Each app can differ.
+rewrite_prompt: |
+  You are rewriting cycling NEWS items. If the text is not in English, translate it to English first, then rewrite the title and description clearly and concisely. Preserve rider, team, and race names exactly. Do not invent facts. Remove HTML, ads, and sponsor boilerplate.
